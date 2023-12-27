@@ -27,11 +27,6 @@ function Candle({ left, top, out }: CandleProps) {
           </motion.div>
           
       </div>
-      {/* <motion.div  
-        animate={{}}
-        initial={{opacity:0}}
-        transition={{duration:0.5, ease:"easeInOut"}}>
-      </motion.div> */}
     </div>
   );
 }
@@ -68,8 +63,9 @@ export default function Cake() {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
-        if (!isMounted) return; // Check if the component is still mounted
-
+        if (!isMounted) return; 
+        
+        // Check if the component is still mounted
         const audioContext = new AudioContext();
         const analyzer = audioContext.createAnalyser();
         const microphone = audioContext.createMediaStreamSource(stream);
@@ -119,7 +115,7 @@ export default function Cake() {
         placeholder='Place candles to start...'
          />
       </div>
-      <div className="cake" onMouseMove={(event)=>{
+      <div className="cake" onClick={(event)=>{
         if(!dripRef.current) return;
         const rect = dripRef.current.getBoundingClientRect();
         setCandles([
