@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Cake from './component/Cake.tsx'
-import Footer from './component/Footer';
+
 import { BrowserRouter,Routes } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
