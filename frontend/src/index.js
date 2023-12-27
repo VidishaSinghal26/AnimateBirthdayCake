@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Cake from './component/Cake.tsx'
+import Cake from './component/Cake'
 
 import { BrowserRouter,Routes } from 'react-router-dom';
 

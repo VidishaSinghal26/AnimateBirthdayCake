@@ -1,40 +1,37 @@
-
 import React, { useEffect, useRef, useState } from 'react';
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 import '../component/cake.css';
 
-interface CandleProps {
-  left: number;
-  top: number;
-  out: boolean;
-}
-
-function Candle({ left, top, out }: CandleProps) {
+function Candle({ left, top, out }) {
   return (
     <div>
-      <div  >
-        <motion.div className="candle" 
-        style={{left:`${left}px`,top:`${top}px`}}
-        animate={{y:0}}
-        initial={{y:-100}}
-        transition={{duration:0.5, ease:"easeInOut", delay:0.5}}>
-         {!out &&  <div className="flame">
-            <motion.div 
-             animate={{y:0}}
-             initial={{opacity:0}}
-             transition={{duration:0.5, ease:"easeInOut", delay:1.5}} />
-          </div>}
-          </motion.div>
-          
+      <div>
+        <motion.div
+          className="candle"
+          style={{ left: `${left}px`, top: `${top}px` }}
+          animate={{ y: 0 }}
+          initial={{ y: -100 }}
+          transition={{ duration: 0.5, ease: "easeInOut", delay: 0.5 }}
+        >
+          {!out && (
+            <div className="flame">
+              <motion.div
+                animate={{ y: 0 }}
+                initial={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut", delay: 1.5 }}
+              />
+            </div>
+          )}
+        </motion.div>
       </div>
     </div>
   );
 }
 
 export default function Cake() {
-  const [blowing, setBlowing] = useState<number | boolean>();
-  const dripRef = useRef<HTMLDivElement>(null);
-  const [candles, setCandles] = useState<Array<CandleProps>>([]);
+  const [blowing, setBlowing] = useState();
+  const dripRef = useRef(null);
+  const [candles, setCandles] = useState([]);
 
   useEffect(() => {
     if (!blowing) return;
@@ -63,9 +60,8 @@ export default function Cake() {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
-        if (!isMounted) return; 
-        
-        // Check if the component is still mounted
+        if (!isMounted) return; // Check if the component is still mounted
+
         const audioContext = new AudioContext();
         const analyzer = audioContext.createAnalyser();
         const microphone = audioContext.createMediaStreamSource(stream);
@@ -85,7 +81,7 @@ export default function Cake() {
           let sum = 0;
           for (let i = 0; i < array.length; i++) {
             sum += array[i];
-            }
+          }
           const avg = sum / array.length;
 
           // Check if the average volume exceeds the loudness threshold
@@ -105,49 +101,49 @@ export default function Cake() {
     };
   }, []);
 
-  return(
+  return (
     <div>
       <h1 className='heading'>Enter your Age</h1>
       <div className='input'>
-        <input 
-        disabled
-        value={candles.filter((candle) => !candle.out).length}
-        placeholder='Place candles to start...'
-         />
+        <input
+          disabled
+          value={candles.filter((candle) => !candle.out).length}
+          placeholder='Place candles to start...'
+        />
       </div>
-      <div className="cake" onClick={(event)=>{
-        if(!dripRef.current) return;
+      <div className="cake" onClick={(event) => {
+        if (!dripRef.current) return;
         const rect = dripRef.current.getBoundingClientRect();
         setCandles([
           ...candles,
           {
             left: event.clientX - rect.left,
-            top : -10 + Math.floor(30* Math.random()),
+            top: -10 + Math.floor(30 * Math.random()),
             out: false,
           }
-        ]) 
+        ])
       }}>
-            <div className="plate"></div>
-            <div className="layer layer-bottom"></div>
-            <div className="layer layer-middle"></div>
-            <div className="layer layer-top"></div>
-            <div className="icing">
-              <div ref={dripRef}>
-                <div>
-                  {candles.map((candle, i) => (
-                    <Candle 
-                    key={i} 
-                    left={candle.left}
-                    top={candle.top}
-                    out={candle.out}
-                    />
-                  ))}
-                </div>
-              </div>
+        <div className="plate"></div>
+        <div className="layer layer-bottom"></div>
+        <div className="layer layer-middle"></div>
+        <div className="layer layer-top"></div>
+        <div className="icing">
+          <div ref={dripRef}>
+            <div>
+              {candles.map((candle, i) => (
+                <Candle
+                  key={i}
+                  left={candle.left}
+                  top={candle.top}
+                  out={candle.out}
+                />
+              ))}
             </div>
-            <div className="drip drip1"></div>
-            <div className="drip drip2"></div>
-            <div className="drip drip3"></div>
+          </div>
+        </div>
+        <div className="drip drip1"></div>
+        <div className="drip drip2"></div>
+        <div className="drip drip3"></div>
       </div>
     </div>
   );
